@@ -1,6 +1,7 @@
 # KernelSizeGet
 This contains script that outputs different kernel size, stride and padding that can be use to transform input image size into desired output shape. 
 This script works for tensorflow, you can try this for other frameworks.
+Will be improving script in future.
 
 NOTE:
   This script assumes that user is using Maxpool2d layer with default parameters after every convolution layer.
