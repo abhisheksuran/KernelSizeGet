@@ -6,6 +6,7 @@ Will be improving script in future.
 NOTE:
   1. This script assumes that user is using Maxpool2d layer with default parameters after every convolution layer.
   2. Depth of image is equal to number of kernel used, so depth is not in script's output
+  3. Will add same functionality for convolution Transpose layer in future.
 ```
 usage: shaper.py [-h] -l integer_value -ih integer_value -iw integer_value -oh integer_value -ow integer_value
                  [-vs integer_value] [-hs integer_value] [-k True/False]
