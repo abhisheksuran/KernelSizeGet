@@ -7,6 +7,21 @@ NOTE:
   1. This script assumes that user is using Maxpool2d layer with default parameters after every convolution layer.
   2. Depth of image is equal to number of kernel used, so depth is not in script's output
   3. Will add same functionality for convolution Transpose layer in future.
+  
+  
+Example: 
+``` python shaper.py  -l 3 -ih 32 -iw 32 -oh 4 -ow 4 -vs 1 -hs 1 -k True ```
+output: 
+``` kernel shape, strides and padding for every convolution layer in network are (((7, 7), (1, 1), 'SAME'), ((8, 8), (1, 1), 'SAME'), ((9, 9), (1, 1), 'SAME'))
+kernel shape, strides and padding for every convolution layer in network are (((7, 7), (1, 1), 'SAME'), ((9, 9), (1, 1), 'SAME'), ((9, 9), (1, 1), 'SAME'))
+kernel shape, strides and padding for every convolution layer in network are (((8, 8), (1, 1), 'SAME'), ((8, 8), (1, 1), 'SAME'), ((8, 8), (1, 1), 'SAME'))
+kernel shape, strides and padding for every convolution layer in network are (((8, 8), (1, 1), 'SAME'), ((8, 8), (1, 1), 'SAME'), ((9, 9), (1, 1), 'SAME'))
+kernel shape, strides and padding for every convolution layer in network are (((8, 8), (1, 1), 'SAME'), ((9, 9), (1, 1), 'SAME'), ((9, 9), (1, 1), 'SAME'))
+kernel shape, strides and padding for every convolution layer in network are (((9, 9), (1, 1), 'SAME'), ((9, 9), (1, 1), 'SAME'), ((9, 9), (1, 1), 'SAME')) 
+.
+.
+.
+```
 ```
 usage: shaper.py [-h] -l integer_value -ih integer_value -iw integer_value -oh integer_value -ow integer_value
                  [-vs integer_value] [-hs integer_value] [-k True/False]
