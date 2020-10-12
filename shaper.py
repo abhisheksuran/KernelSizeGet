@@ -1,5 +1,6 @@
 from itertools import permutations, product, combinations_with_replacement
 import argparse
+from tqdm import tqdm
 
 class Dimensions():
     def __init__(self, number_of_layers, input_hight, input_width, output_hight, output_width, vstride=None, hstride=None, kernel=False):
@@ -24,11 +25,11 @@ class Dimensions():
             
         else:
             self.strides = [(vstride, hstride)]
-            
-        if kernel == True:
+        kernel = str(kernel)    
+        if kernel in  ['True', 'true']:
             self.kernel_sizes = [(p, p) for p in range(1,10)]
             
-        else:    
+        elif kernel in  ['False', 'false']:
             self.kernel_sizes = list(permutations(range(1,10), 2))
         self.padding = ['VALID', 'SAME']
 		
@@ -64,7 +65,7 @@ class Dimensions():
         ksp = [c for c in product(*ksp)]
         #print(ksp)
         ksp = ( b for b in combinations_with_replacement(ksp, self.number_of_layers))
-        for k in ksp:
+        for k in tqdm(ksp):
             
             #print(k)
             for l, kk in zip(range(self.number_of_layers), k):
@@ -98,7 +99,7 @@ if __name__ == "__main__":
             parser.add_argument('-ow', type=int, required=True, metavar='integer_value', help="Width of output image (only integer values accepted)")
             parser.add_argument('-vs', type=int, default=None, metavar='integer_value', help="(optional)vertical stride for image (only integer values accepted)")
             parser.add_argument('-hs', type=int, default=None, metavar='integer_value', help="(optional)horizontal stride for image (only integer values accepted)")
-            parser.add_argument('-k', type=bool, default=False, metavar='True/False', help="set True if you only want to try kernels with equal height and width (False is by default)")
+            parser.add_argument('-k', type=str, default='False', metavar='True/False', help="set True if you only want to try kernels with equal height and width (False is by default)")
             args = parser.parse_args()
             
             n_layers = args.l
@@ -109,11 +110,18 @@ if __name__ == "__main__":
             vstride = args.vs
             hstride = args.hs
             kernel = args.k
+            print(kernel)
             dim = Dimensions(n_layers, input_height, input_width, output_height, output_width, vstride, hstride, kernel)
             res = dim.get_dim()
             
-            for i in res:
-                print(f"kernel shape, strides and padding for every convolution layer in network are {i}")
+            if res[-1] == '!':
+                print(res)
+            
+            else:
                 
+                for i in res:
+                                            
+                    print(f"kernel shape, strides and padding for every convolution layer in network are {i}")
+                    
            
             
