@@ -26,13 +26,17 @@ class Dimensions():
         else:
             self.strides = [(vstride, hstride)]
         kernel = str(kernel)    
-        if kernel in  ['True', 'true']:
+        if kernel in  ['True', 'true', '1']:
             self.kernel_sizes = [(p, p) for p in range(1,10)]
             
-        elif kernel in  ['False', 'false']:
+        elif kernel in  ['False', 'false', '0']:
             self.kernel_sizes = list(permutations(range(1,10), 2))
-        self.padding = ['VALID', 'SAME']
+        
+        else:
+            self.kernel_sizes = 'wrong'
 		
+        self.padding = ['VALID', 'SAME']
+        
     def layer(self, i_hight, i_width, kernel_sizes, strides, padding='VALID'):
         if padding == 'VALID':
             H = ((i_hight - kernel_sizes[0]) /strides[0]) + 1
@@ -58,6 +62,8 @@ class Dimensions():
     
     
     def get_dim(self):
+        if self.kernel_sizes == 'wrong':
+            return "Please use right value of flag 'k'"
         result = []
         height = self.input_hight
         width = self.input_width
@@ -110,11 +116,11 @@ if __name__ == "__main__":
             vstride = args.vs
             hstride = args.hs
             kernel = args.k
-            print(kernel)
+            #print(kernel)
             dim = Dimensions(n_layers, input_height, input_width, output_height, output_width, vstride, hstride, kernel)
             res = dim.get_dim()
             
-            if res[-1] == '!':
+            if res[-1] in ["!", "'"]:
                 print(res)
             
             else:
